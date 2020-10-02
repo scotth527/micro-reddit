@@ -1,9 +1,11 @@
-class User < ApplicationRecord
-     include ActiveModel::Validations
-     include EmailValidator
 
-     validates :username, :email, uniqueness: true,  presence: true
-     validates :username, length: { minimum: 4, maximum: 15 }
-     validates_with EmailValidator
+class User < ApplicationRecord
+
+     validates :username, :email, uniqueness: true,  presence: true,
+        length: { minimum: 4 }
+     validates :username, length: { maximum: 15 }
+     validates :email, format: { with: /\A(.+)@(.+)\z/,
+         message: "must be a valid email format"}
      has_many :posts
+     has_many :comments
 end
